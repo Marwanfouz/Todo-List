@@ -1,4 +1,4 @@
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <div>dashboard</div>
