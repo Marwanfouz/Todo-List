@@ -1,7 +1,7 @@
 'use client';
 
-const Todo = () => {
-  return <div>Todo component</div>;
+const Todo = ({ todo }) => {
+  return <div>{todo.content}</div>;
 };
 
 export default Todo;
