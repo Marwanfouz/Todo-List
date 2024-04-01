@@ -1,13 +1,18 @@
 import Todo from './Todo';
+import { ITodo } from '@/types';
 
-const TodoList = ({ todos }) => {
+interface TodoListProps {
+  todos: ITodo[];
+}
+
+const TodoList: React.FC<TodoListProps> = ({ todos }) => {
   return (
     <div>
       {todos.map((todo) => (
-        <Todo todo={todo} key={todo.id}/>
+        <Todo todo={todo} key={todo.id} />
       ))}
     </div>
-  )
+  );
 };
 
 export default TodoList;
