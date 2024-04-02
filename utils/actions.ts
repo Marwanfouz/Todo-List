@@ -1,13 +1,26 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import db from './db';
-import { ITodo } from '@/types';
 
-export const newTodo = async (formData) => {
-  const todo = await db.todo.create({
+export const completeTodo = async (id: string) => {
+  await db.todo.update({
+    where: { id },
     data: {
-      content: formData.get('content'),
+      completed: true,
     },
-  });
-  revalidatePath('/todos');
+  }),
+    revalidatePath('/todos')
+};
+
+export const newTodo = async (data: FormData) => {
+  const newTodo = data.get('todo') as string;
+
+  if (newTodo) {
+    await db.todo.create({
+      data: {
+        content: newTodo,
+      },
+    });
+    revalidatePath('/todos');
+  }
 };
