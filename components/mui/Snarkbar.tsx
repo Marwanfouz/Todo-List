@@ -24,7 +24,7 @@ export default function CustomizedSnackbars() {
 
   return (
     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
-      <Button type="submit" onClick={handleClick} sx={{}}>
+      <Button type="submit" onClick={handleClick}>
         new todo
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

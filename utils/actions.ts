@@ -9,6 +9,7 @@ import {
   getDoc,
   addDoc,
   serverTimestamp,
+  deleteDoc,
 } from 'firebase/firestore';
 
 const db = getFirestore(app);
@@ -38,4 +39,11 @@ export const newTodo = async (data: FormData) => {
     });
     revalidatePath('/todos');
   }
+};
+
+export const deleteTodo = async (todoId: string) => {
+  const todoRef = doc(collection(db, 'todo'), todoId);
+
+  await deleteDoc(todoRef);
+  revalidatePath('/todos');
 };

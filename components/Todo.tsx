@@ -1,8 +1,9 @@
 'use client';
 import { useTransition } from 'react';
-import { completeTodo } from '@/utils/actions';
+import { completeTodo, deleteTodo } from '@/utils/actions';
 import { ITodo } from '@/types';
-import { ListItem, Typography } from '@mui/material';
+import { Box, Button, ListItem, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface TodoProps {
   todo: ITodo;
@@ -11,24 +12,30 @@ interface TodoProps {
 const Todo: React.FC<TodoProps> = ({ todo }) => {
   const [isPending, startTransition] = useTransition();
   return (
-    <ListItem
-      onClick={() => startTransition(() => completeTodo(todo.id))}
-      sx={{
-        cursor: 'pointer',
-        border: 1,
-        borderRadius: 2,
-        maxWidth: 400,
-        marginX: 'auto',
-        marginY: 2,
-      }}
+    <Box
+      sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}
     >
-      <Typography
-        style={{ color: todo.completed ? '#009688' : '', fontSize: 25 }}
-        key={todo.id}
+      <ListItem
+        onClick={() => startTransition(() => completeTodo(todo.id))}
+        sx={{
+          cursor: 'pointer',
+          border: 1,
+          borderRadius: 2,
+          maxWidth: 400,
+          marginY: 2,
+        }}
       >
-        {todo.content}
-      </Typography>
-    </ListItem>
+        <Typography
+          style={{ color: todo.completed ? '#009688' : '', fontSize: 25 }}
+          key={todo.id}
+        >
+          {todo.content}
+        </Typography>
+      </ListItem>
+      <Button onClick={() => startTransition(() => deleteTodo(todo.id))}>
+        <DeleteIcon color="error" />
+      </Button>
+    </Box>
   );
 };
 
