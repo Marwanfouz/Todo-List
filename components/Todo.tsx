@@ -2,6 +2,7 @@
 import { useTransition } from 'react';
 import { completeTodo } from '@/utils/actions';
 import { ITodo } from '@/types';
+import { ListItem, Typography } from '@mui/material';
 
 interface TodoProps {
   todo: ITodo;
@@ -10,14 +11,24 @@ interface TodoProps {
 const Todo: React.FC<TodoProps> = ({ todo }) => {
   const [isPending, startTransition] = useTransition();
   return (
-    <div
+    <ListItem
       onClick={() => startTransition(() => completeTodo(todo.id))}
-      className={`px-8 py-2 border border-black/25 cursor-pointer ${
-        todo.completed ? 'line-through text-black/30' : ''
-      }`}
+      sx={{
+        cursor: 'pointer',
+        border: 1,
+        borderRadius: 2,
+        maxWidth: 400,
+        marginX: 'auto',
+        marginY: 2,
+      }}
     >
-      {todo.content}
-    </div>
+      <Typography
+        style={{ color: todo.completed ? '#009688' : '', fontSize: 25 }}
+        key={todo.id}
+      >
+        {todo.content}
+      </Typography>
+    </ListItem>
   );
 };
 
