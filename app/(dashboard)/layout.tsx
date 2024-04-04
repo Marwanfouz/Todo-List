@@ -1,12 +1,14 @@
 import NewTodoForm from '@/components/NewTodoForm';
+import { Box } from '@mui/material';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <div>dashboard</div>
-      <div>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
         <NewTodoForm />
-      </div>
+      </Box>
       <div>{children}</div>
     </div>
   );
