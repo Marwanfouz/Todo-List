@@ -26,7 +26,11 @@ const Todo: React.FC<TodoProps> = ({ todo }) => {
         }}
       >
         <Typography
-          style={{ color: todo.completed ? '#009688' : '', fontSize: 25 }}
+          style={{
+            color: todo.completed ? '#009688' : '',
+            fontSize: 25,
+            textDecoration: todo.completed ? 'line-through': '',
+          }}
           key={todo.id}
         >
           {todo.content}
