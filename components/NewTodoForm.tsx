@@ -11,7 +11,8 @@ const NewTodoForm = () => {
           label="type your task"
           name="content"
           sx={{ m: 2, width: 300 }}
-        />
+        >
+        </TextField>
         <Snarkbar></Snarkbar>
       </form>
     </div>
