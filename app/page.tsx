@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 
 export default function Home() {
@@ -8,11 +8,22 @@ export default function Home() {
         display: 'flex',
         alignContent: 'center',
         justifyContent: 'center',
-        height: '90vh',
+        height: '85vh',
         flexWrap: 'wrap',
+        flexDirection: 'column',
       }}
     >
-      <Link href={'/todos'}>
+      <Typography
+        variant="h1"
+        gutterBottom
+        sx={{ maxWidth: 900, textAlign: 'center' }}
+      >
+        Organize your work and life, finally.
+      </Typography>
+      <Link
+        href={'/todos'}
+        style={{ alignSelf: 'center', justifySelf: 'center' }}
+      >
         <Button
           size="large"
           variant="contained"
