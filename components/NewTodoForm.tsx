@@ -10,9 +10,8 @@ const NewTodoForm = () => {
           variant="outlined"
           label="type your task"
           name="content"
-          sx={{ m: 2, width: 300 }}
-        >
-        </TextField>
+          sx={{ m: 2, width: { xs: 150, sm: 200, md: 300 } }}
+        ></TextField>
         <Snarkbar></Snarkbar>
       </form>
     </div>

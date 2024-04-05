@@ -22,14 +22,14 @@ const Todo: React.FC<TodoProps> = ({ todo }) => {
           border: 1,
           borderRadius: 2,
           maxWidth: 400,
-          marginY: 2,
+          margin: 2,
         }}
       >
         <Typography
-          style={{
+          sx={{
             color: todo.completed ? '#009688' : '',
-            fontSize: 25,
-            textDecoration: todo.completed ? 'line-through': '',
+            fontSize: { xs: 20, sm: 25, md: 25 },
+            textDecoration: todo.completed ? 'line-through' : '',
           }}
           key={todo.id}
         >
