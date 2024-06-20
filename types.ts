@@ -1,6 +1,9 @@
 export interface ITodo {
   id: string;
-  createdAt: Date;
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
   content: string;
   completed: boolean;
 }

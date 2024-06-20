@@ -1,5 +1,4 @@
 'use server';
-import { revalidatePath } from 'next/cache';
 import { app } from './firebase';
 import {
   getFirestore,
@@ -25,7 +24,6 @@ export const completeTodo = async (id: string) => {
     await updateDoc(todoDocRef, {
       completed: !currentCompletedState,
     });
-    revalidatePath('/todos');
   }
 };
 
@@ -37,7 +35,6 @@ export const newTodo = async (data: FormData) => {
       createdAt: serverTimestamp(),
       completed: false,
     });
-    revalidatePath('/todos');
   }
 };
 
@@ -45,5 +42,4 @@ export const deleteTodo = async (todoId: string) => {
   const todoRef = doc(collection(db, 'todo'), todoId);
 
   await deleteDoc(todoRef);
-  revalidatePath('/todos');
 };
