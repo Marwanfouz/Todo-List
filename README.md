@@ -2,6 +2,7 @@
 for alx project
 ## Technologies
 * ⚙️ Nextjs
+* ⚙️ React-hook-form
 * ⚙️ Material-ui
 * ⚙️ Firebase
 * ⚙️ Typescript
