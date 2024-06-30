@@ -1,7 +1,10 @@
+'use client';
+import { useAuth } from '@/context/auth';
 import { Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 
 export default function Home() {
+  const {user} = useAuth();
   return (
     <Box
       sx={{
@@ -25,7 +28,7 @@ export default function Home() {
         Organize your work and life, finally.
       </Typography>
       <Link
-        href={'/todos'}
+        href={user? '/todos' : '/login'}
         style={{ alignSelf: 'center', justifySelf: 'center' }}
       >
         <Button

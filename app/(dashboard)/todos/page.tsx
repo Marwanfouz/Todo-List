@@ -1,60 +1,54 @@
 'use client';
+
 import TodoList from '@/components/TodoList';
 import { app } from '@/utils/firebase';
 import {
   getFirestore,
   collection,
-  getDocs,
   onSnapshot,
+  where,
+  query,
 } from 'firebase/firestore';
 import { ITodo } from '@/types';
-import { useEffect, useState } from 'react'; // Assuming you're using React
-
-const getData = async () => {
-  const db = getFirestore(app);
-  const querySnapshot = await getDocs(collection(db, 'todo'));
-  let todos: ITodo[] = [];
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    console.log('data', data);
-    if (data) {
-      // Ensure createdAt is a plain object
-      const createdAtPlain = {
-        seconds: data.createdAt.seconds,
-        nanoseconds: data.createdAt.nanoseconds,
-      };
-
-      const todo: ITodo = {
-        id: doc.id,
-        createdAt: createdAtPlain,
-        content: data.content || '',
-        completed: data.completed || false,
-      };
-      todos.push(todo);
-    }
-  });
-  console.log(todos);
-  return todos;
-};
+import { useEffect, useState } from 'react';
+import { useAuth } from '@/context/auth';
+import { useRouter } from 'next/navigation';
 
 const TodosPage = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  const router = useRouter();
+  if (!user) {
+    router.replace('/login');
+  }
 
   useEffect(() => {
+    if (!user?.uid) {
+      setLoading(false); // Set loading to false if user is not available
+      return;
+    }
+
     const db = getFirestore(app);
-    const unsubscribe = onSnapshot(collection(db, 'todo'), (querySnapshot) => {
+    const q = query(collection(db, 'todo'), where('userId', '==', user.uid));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const updatedTodos: ITodo[] = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data) {
           // Ensure createdAt is a plain object
-          const createdAtPlain = {
-            seconds: data.createdAt.seconds,
-            nanoseconds: data.createdAt.nanoseconds,
-          };
+          const createdAtPlain = data.createdAt
+            ? {
+                seconds: data.createdAt.seconds,
+                nanoseconds: data.createdAt.nanoseconds,
+              }
+            : null;
 
           const todo: ITodo = {
             id: doc.id,
+            userId: data.userId,
             createdAt: createdAtPlain,
             content: data.content || '',
             completed: data.completed || false,
@@ -63,10 +57,15 @@ const TodosPage = () => {
         }
       });
       setTodos(updatedTodos);
+      setLoading(false); // Set loading to false after fetching todos
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>

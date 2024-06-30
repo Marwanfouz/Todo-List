@@ -6,8 +6,6 @@ import {
   doc,
   updateDoc,
   getDoc,
-  addDoc,
-  serverTimestamp,
   deleteDoc,
 } from 'firebase/firestore';
 
@@ -23,17 +21,6 @@ export const completeTodo = async (id: string) => {
 
     await updateDoc(todoDocRef, {
       completed: !currentCompletedState,
-    });
-  }
-};
-
-export const newTodo = async (data: FormData) => {
-  const newTodo = data.get('content') as string;
-  if (newTodo) {
-    await addDoc(collection(db, 'todo'), {
-      content: newTodo,
-      createdAt: serverTimestamp(),
-      completed: false,
     });
   }
 };
