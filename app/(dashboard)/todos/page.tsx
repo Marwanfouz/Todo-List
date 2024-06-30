@@ -20,11 +20,12 @@ const TodosPage = () => {
   const { user } = useAuth();
 
   const router = useRouter();
-  if (!user) {
-    router.replace('/login');
-  }
 
   useEffect(() => {
+    if (!user) {
+      router.replace('/login');
+    }
+
     if (!user?.uid) {
       setLoading(false); // Set loading to false if user is not available
       return;
@@ -64,7 +65,7 @@ const TodosPage = () => {
   }, [user]);
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
